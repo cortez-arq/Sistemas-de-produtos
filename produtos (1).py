@@ -51,7 +51,7 @@ def produto_mais_caro(produtos):
         return
 
     comprimentoLista=len(ListaCaro)  #Mostra todos os produtos maiores
-    print("Filtro do produtos mais caros:","\n")
+    print("Filtro dos produtos mais caros:","\n")
 
     for i in range(0,comprimentoLista,2):
          print("Nome:",ListaCaro[i],"\n" "Valor:", ListaCaro[i+1<comprimentoLista])
@@ -95,20 +95,59 @@ def NomeNaoRepetido(produto,produtos, final):
     produtos[produto] = 0
 
     return   produto
-
+def numero_nome(produto,indice):
+    
+    while True:
+        
+        for i in produto:
+            try:
+                
+                type(float(i))
+                        
+            except ValueError:
+                    return produto
+        print("É necessário haver letras no nome")
+        produto = input(f"Insira o nome do produto {indice+1}: ")
+            
 #Input dos nomes das keys do dicionário
 
 print("-"*15, "NOMES DOS PRODUTOS","-"*15,"\n")
+while True:
+    try:
+        # Tenta converter a entrada para um número inteiro
+        items = int(input("Insira a quantidade de items a serem cadastrados: "))
+        
+        # Garante que a quantidade não seja negativa
+        if items < 0:
+            print("Por favor, digite um número maior ou igual a zero.")
+            continue
+            
+        break  
+        
+    except ValueError:
+        
+        print("Erro: Entrada inválida! Digite apenas números inteiros (ex: 5, 10, 22).")
 
-for i in range(5):
+for i in range(items):
     produto = input(f"Insira o nome do produto {i+1}: ")
     final=len(produto)-1
-    if produto == "" or produto[0] == " " or produto[final]== " ":
-        produto=NaoNulo(produto, final)
-
-    if produto in produtos:
-          NomeNaoRepetido(produto,produtos, final)
-
+    for j in produto:
+        if j.isdigit():
+            produto=numero_nome(produto,i )
+            
+        else:
+        
+            if produto == "" or produto[0] == " " or produto[final]== " ":
+                produto=NaoNulo(produto, final)
+        
+            if produto in produtos:
+                  NomeNaoRepetido(produto,produtos, final)
+        
+        if produto == "" or produto[0] == " " or produto[final]== " ":
+                produto=NaoNulo(produto, final)
+        
+        if produto in produtos:
+                  NomeNaoRepetido(produto,produtos, final)
     produtos[produto] = 0
 
 
@@ -154,14 +193,17 @@ print("\n")
 produto_mais_barato(produtos)
 print("\n")
 qtd = int(input('Digite a quantidade de produtos que deseja remover: '))
-while not qtd==0:
-    item = input('Digite o nome do produtos que deseja remover: ')
-    if item in produtos :
-        del produtos[item]
-    else:
-        qtd+=1
-        print("Nome errado")
-
-    qtd-=1
-print(produtos)
-
+if qtd==0:
+    pass
+else:
+    while not qtd==0:
+        item = input('Digite o nome do produtos que deseja remover: ')
+        if item in produtos :
+            del produtos[item]
+        else:
+            qtd+=1
+            print("Nome errado")
+    
+        qtd-=1
+    for i in produtos:
+        print("Nome: ",i,"Preço: ", produtos[i],"\n")
